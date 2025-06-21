@@ -17,7 +17,7 @@ ssh_public_key = "ssh-rsa AAAA..."
 # The external Prometheus endpoint that will be scraped
 # Use your redis cloud database 'internal' endpoint and remove the redis-<PORT> and replace the port with 8070
 # example: redis-14173.internal.c47755.us-west-2-mz.ec2.cloud.rlrcp.com:14173 becomes....
-prometheus_endpoint = "http://your-redis-enterprise-metrics:9090"
+prometheus_endpoint = "internal.c47755.us-west-2-mz.ec2.cloud.rlrcp.com:8070"
 
 # Grafana Configuration
 # Admin password for Grafana (default: admin)

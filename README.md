@@ -99,6 +99,49 @@ docker-compose logs -f prometheus
 terraform destroy
 ```
 
+
+
+## Configuration
+
+1. Copy the example configuration file:
+   ```bash
+   cp terraform.tfvars.example terraform.tfvars
+   ```
+
+2. Edit `terraform.tfvars` with your specific values:
+   - `ssh_public_key`: Your SSH public key for EC2 access
+   - `prometheus_endpoint`: External Prometheus endpoint (e.g., `internal.c47755.us-west-2-mz.ec2.cloud.rlrcp.com:8070`)
+   - `grafana_admin_password`: Admin password for Grafana
+   - `vpc_id` and `subnet_id`: (Optional) Use existing VPC/subnet instead of creating new ones
+   - `dashboard_folders`: (Optional) List of dashboard folder paths to copy from
+   - `exclude_dashboards`: (Optional) List of dashboard filenames to exclude from loading
+
+### Example Configuration
+
+```hcl
+aws_region = "us-west-2"
+project_name = "redis-observability"
+instance_type = "t3.medium"
+volume_size = 20
+
+ssh_public_key = "ssh-rsa AAAA..."
+prometheus_endpoint = "internal.c47755.us-west-2-mz.ec2.cloud.rlrcp.com:8070"
+grafana_admin_password = "your-secure-password"
+
+# Optional: Use existing VPC/Subnet
+# vpc_id = "vpc-12345678"
+# subnet_id = "subnet-12345678"
+
+# Optional: Configure which dashboard folders to copy from
+dashboard_folders = [
+  "dashboards/grafana_v9-11/software/basic",
+  "dashboards/grafana_v9-11/software/extended"
+]
+
+
+```
+
+
 ## Troubleshooting
 
 ### Services Not Accessible
@@ -116,72 +159,3 @@ terraform destroy
 1. Verify Prometheus datasource in Grafana
 2. Check if metrics are being scraped in Prometheus
 3. Verify Redis Enterprise cluster is generating metrics
-
-## Configuration
-
-1. Copy the example configuration file:
-   ```bash
-   cp terraform.tfvars.example terraform.tfvars
-   ```
-
-2. Edit `terraform.tfvars` with your specific values:
-   - `ssh_public_key`: Your SSH public key for EC2 access
-   - `prometheus_endpoint`: External Prometheus endpoint (e.g., `http://your-redis-enterprise-metrics:9090`)
-   - `grafana_admin_password`: Admin password for Grafana
-   - `vpc_id` and `subnet_id`: (Optional) Use existing VPC/subnet instead of creating new ones
-   - `dashboard_folders`: (Optional) List of dashboard folder paths to copy from
-   - `exclude_dashboards`: (Optional) List of dashboard filenames to exclude from loading
-
-### Example Configuration
-
-```hcl
-aws_region = "us-west-2"
-project_name = "redis-observability"
-instance_type = "t3.medium"
-volume_size = 20
-
-ssh_public_key = "ssh-rsa AAAA..."
-prometheus_endpoint = "http://your-redis-enterprise-metrics:9090"
-grafana_admin_password = "your-secure-password"
-
-# Optional: Use existing VPC/Subnet
-# vpc_id = "vpc-12345678"
-# subnet_id = "subnet-12345678"
-
-# Optional: Configure which dashboard folders to copy from
-dashboard_folders = [
-  "dashboards/grafana_v9-11/software/basic",
-  "dashboards/grafana_v9-11/software/extended"
-]
-
-# Optional: Exclude specific dashboards
-exclude_dashboards = [
-  "redis-software-active-active-dashboard_v9-11.json",
-  "redis-software-synchronization-overview_v9-11.json"
-]
-```
-
-### Dashboard Configuration Examples
-
-**Copy only basic dashboards:**
-```hcl
-dashboard_folders = ["dashboards/grafana_v9-11/software/basic"]
-```
-
-**Copy from custom folder structure:**
-```hcl
-dashboard_folders = [
-  "dashboards/grafana_v9-11/software/basic",
-  "custom-dashboards/my-dashboards"
-]
-```
-
-**Exclude specific dashboards:**
-```hcl
-exclude_dashboards = [
-  "redis-software-cluster-dashboard_v9-11.json",
-  "redis-software-database-dashboard_v9-11.json"
-]
-```
-
-# aws-grafana-quickstart
