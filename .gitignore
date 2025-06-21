@@ -38,6 +38,8 @@ terraform.rc
 # Ignore any local Terraform lock files
 .terraform.lock.hcl
 
+terraform.txt
+
 # Ignore any backup files
 *.backup
 
