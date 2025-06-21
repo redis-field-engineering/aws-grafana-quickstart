@@ -1,0 +1,40 @@
+# AWS Configuration
+aws_region = "us-west-2"
+
+# Project Configuration
+project_name = "redis-observability"
+
+# EC2 Configuration
+instance_type = "t3.medium"
+volume_size   = 20
+
+# SSH Configuration (required)
+# Generate an SSH key pair and provide the public key here
+# Example: ssh-keygen -t rsa -b 4096 -f ~/.ssh/redis-observability
+ssh_public_key = "ssh-rsa AAAA..."
+
+# Prometheus Configuration (required)
+# The external Prometheus endpoint that will be scraped
+# Use your redis cloud database 'internal' endpoint and remove the redis-<PORT> and replace the port with 8070
+# example: redis-14173.internal.c47755.us-west-2-mz.ec2.cloud.rlrcp.com:14173 becomes....
+prometheus_endpoint = "http://your-redis-enterprise-metrics:9090"
+
+# Grafana Configuration
+# Admin password for Grafana (default: admin)
+grafana_admin_password = "your-secure-password" 
+
+# Optional: Use existing VPC/Subnet (leave empty to create new ones)
+# vpc_id = "vpc-12345678"
+# subnet_id = "subnet-12345678"
+
+# Optional: Configure dashboard folders to copy from
+# dashboard_folders = [
+#   "dashboards/grafana_v9-11/software/basic",
+#   "dashboards/grafana_v9-11/software/extended"
+# ]
+
+# Optional: Exclude specific dashboards from loading
+# exclude_dashboards = [
+#   "redis-software-cluster-dashboard_v9-11.json",
+#   "redis-software-database-dashboard_v9-11.json"
+# ]
